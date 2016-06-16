@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="flickrSearch">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Flickr Search</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-messages.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+</head>
+
+<body ng-controller="flickrController as vm">
+
+    <div class="container">
+
+        <img class="logo center-block" src="images/flickr-logo.jpg" height="100px"></img>
+
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2 text-center">
+                <form name="search" class="form-horizontal" method="post" ng-submit="search.$valid && vm.search()" novalidate>
+                    <div class="form-group">
+                        <div class="navbar-form">
+                            <input ng-model="vm.keywords" class="form-control" id="keywords" name="keywords" placeholder="Enter a search term..." type="text" required="" />
+                            <input type="submit" class="btn btn-search" value="Search">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="help-block" ng-messages="search.keywords.$error" ng-if="search.$submitted">
+            <p ng-message="required" class="alert alert-danger">Please enter a search term.</p>
+        </div>
+
+        <p ng-if="vm.messageType === 'error'" class="alert alert-danger">There was an error accessing the Flickr API.</p>
+        <p ng-if="vm.messageType === 'search'" class="text-center">Searching Flickr for photos tagged with "{{ vm.savedKeywords }}".</p>
+        <p ng-if="vm.messageType === 'results'" class="text-center">We found {{ vm.total | number:0 }} results for "{{ vm.savedKeywords }}".</p>
+
+        <div ng-if="vm.photos" class="row">
+            <div class="col-xs-12">
+                <div class="wrapper masonry">
+                    <div ng-repeat="photo in vm.photos">
+                        <div class="item">
+                            <img class="img-responsive" ng-src="https://farm{{ photo.farm }}.staticflickr.com/{{ photo.server }}/{{ photo.id }}_{{ photo.secret }}.jpg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
