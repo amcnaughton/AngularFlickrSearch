@@ -22,7 +22,7 @@
 
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2 text-center">
-                <form name="search" class="form-horizontal" method="post" ng-submit="search.$valid && vm.search()" novalidate>
+                <form name="search" class="form-horizontal" method="post" ng-submit="search.$valid && vm.search(search)" novalidate>
                     <div class="form-group">
                         <div class="navbar-form">
                             <input ng-model="vm.keywords" class="form-control" id="keywords" name="keywords" placeholder="Enter a search term..." type="text" required="" />
